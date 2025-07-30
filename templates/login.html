@@ -3,133 +3,189 @@
 {% block title %}Sign In - Passwordless Authentication{% endblock %}
 
 {% block content %}
-<section class="py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-8">
-                <div class="login-card">
-                    <div class="text-center mb-4">
-                        <div class="login-icon">
-                            <i class="fas fa-sign-in-alt"></i>
-                        </div>
-                        <h2 class="h3 fw-bold">Welcome Back</h2>
-                        <p class="text-muted">Sign in securely with your hardware token</p>
+<section class="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto w-full">
+        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl" data-aos="fade-up">
+            <!-- Header Section -->
+            <div class="text-center mb-8">
+                <div class="relative mx-auto w-24 h-24 mb-6">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow">
+                        <i class="fas fa-sign-in-alt text-3xl text-white"></i>
                     </div>
+                    <div class="absolute -inset-2 bg-gradient-to-br from-blue-400/30 to-purple-600/30 rounded-full blur-lg animate-pulse"></div>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    Welcome
+                    <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                        Back
+                    </span>
+                </h1>
+                <p class="text-white/80 text-lg">
+                    Sign in securely with your hardware token
+                </p>
+            </div>
 
-                    <!-- Login Form -->
-                    <form id="loginForm">
-                        <div class="mb-4">
-                            <label for="username" class="form-label">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                                <input type="text" class="form-control" id="username" name="username" required 
-                                       placeholder="Enter your username">
-                            </div>
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-6">
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <label for="username" class="block text-white font-semibold mb-2">
+                        <i class="fas fa-user mr-2 text-blue-300"></i>
+                        Username
+                    </label>
+                    <div class="relative">
+                        <input type="text" 
+                               id="username" 
+                               name="username" 
+                               required 
+                               placeholder="Enter your username"
+                               class="w-full px-4 py-4 bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300">
+                    </div>
+                </div>
+
+                <!-- Info Alert -->
+                <div class="bg-blue-500/20 backdrop-blur-md border border-blue-400/30 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-info text-white text-sm"></i>
                         </div>
-
-                        <div class="alert alert-info" role="alert">
-                            <i class="fas fa-info-circle me-2"></i>
-                            <strong>Ready to sign in?</strong><br>
-                            After clicking "Sign In", you'll be prompted to authenticate with your registered device.
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3" id="loginBtn">
-                            <i class="fas fa-shield-alt me-2"></i>
-                            Sign In with Hardware Token
-                        </button>
-
-                        <div class="text-center">
-                            <p class="small text-muted">
-                                Don't have an account? 
-                                <a href="{{ url_for('register') }}" class="text-primary">Register here</a>
+                        <div>
+                            <h3 class="text-white font-semibold mb-2">Ready to sign in?</h3>
+                            <p class="text-white/80 text-sm">
+                                After clicking "Sign In", you'll be prompted to authenticate with your registered device.
                             </p>
                         </div>
-                    </form>
+                    </div>
+                </div>
 
-                    <!-- Login Progress -->
-                    <div id="loginProgress" class="login-progress d-none">
-                        <div class="progress-step active" id="loginStep1">
-                            <div class="step-icon">
-                                <i class="fas fa-user-check"></i>
+                <button type="submit" 
+                        id="loginBtn"
+                        class="w-full py-4 px-8 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 group"
+                        data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-shield-alt mr-3 group-hover:scale-110 transition-transform duration-300"></i>
+                    Sign In with Hardware Token
+                    <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">🔑</span>
+                </button>
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                    <p class="text-white/70">
+                        Don't have an account? 
+                        <a href="{{ url_for('register') }}" class="text-blue-300 hover:text-blue-200 font-semibold transition-colors duration-300">
+                            Register here
+                        </a>
+                    </p>
+                </div>
+            </form>
+
+            <!-- Login Progress -->
+            <div id="loginProgress" class="hidden mt-8 space-y-4">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold text-white mb-2">Signing You In</h3>
+                    <p class="text-white/70">Please follow the prompts on your device</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="progress-step-modern active" id="loginStep1">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-user-check text-white"></i>
                             </div>
-                            <div class="step-text">
-                                <h6>Finding Account</h6>
-                                <small>Locating your credentials</small>
+                            <div class="flex-1">
+                                <h4 class="text-white font-semibold">Finding Account</h4>
+                                <p class="text-white/70 text-sm">Locating your credentials</p>
                             </div>
-                        </div>
-                        <div class="progress-step" id="loginStep2">
-                            <div class="step-icon">
-                                <i class="fas fa-random"></i>
-                            </div>
-                            <div class="step-text">
-                                <h6>Challenge Issued</h6>
-                                <small>Generating secure challenge</small>
-                            </div>
-                        </div>
-                        <div class="progress-step" id="loginStep3">
-                            <div class="step-icon">
-                                <i class="fas fa-hand-point-up"></i>
-                            </div>
-                            <div class="step-text">
-                                <h6>Authentication</h6>
-                                <small>Touch your token or authenticate</small>
-                            </div>
-                        </div>
-                        <div class="progress-step" id="loginStep4">
-                            <div class="step-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="step-text">
-                                <h6>Access Granted</h6>
-                                <small>Sign in successful</small>
+                            <div class="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Status Messages -->
-                    <div id="statusMessage" class="mt-3"></div>
+                    
+                    <div class="progress-step-modern" id="loginStep2">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-random text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-white font-semibold">Challenge Issued</h4>
+                                <p class="text-white/70 text-sm">Generating secure challenge</p>
+                            </div>
+                            <div class="w-6 h-6 rounded-full border-2 border-white/30 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white/50 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-step-modern" id="loginStep3">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-hand-point-up text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-white font-semibold">Authentication</h4>
+                                <p class="text-white/70 text-sm">Touch your token or authenticate</p>
+                            </div>
+                            <div class="w-6 h-6 rounded-full border-2 border-white/30 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white/50 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-step-modern" id="loginStep4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-check-circle text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-white font-semibold">Access Granted</h4>
+                                <p class="text-white/70 text-sm">Sign in successful</p>
+                            </div>
+                            <div class="w-6 h-6 rounded-full border-2 border-white/30 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white/50 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Status Messages -->
+            <div id="statusMessage" class="mt-6"></div>
         </div>
     </div>
 </section>
 
 <!-- Security Features -->
-<section class="py-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="text-center">
-                    <h6 class="text-muted mb-3">Your Security is Protected By</h6>
-                    <div class="row g-3 justify-content-center">
-                        <div class="col-auto">
-                            <div class="security-feature">
-                                <i class="fas fa-shield-virus text-success"></i>
-                                <small>Phishing Resistant</small>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="security-feature">
-                                <i class="fas fa-lock text-primary"></i>
-                                <small>End-to-End Encrypted</small>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="security-feature">
-                                <i class="fas fa-microchip text-warning"></i>
-                                <small>Hardware Secured</small>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="security-feature">
-                                <i class="fas fa-eye-slash text-info"></i>
-                                <small>Zero Knowledge</small>
-                            </div>
-                        </div>
-                    </div>
+<section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-xl md:text-2xl font-bold text-white/80 mb-8" data-aos="fade-up">
+            Your Security is Protected By
+        </h2>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-shield-virus text-white text-xl"></i>
                 </div>
+                <h3 class="text-white font-semibold text-sm">Phishing Resistant</h3>
+            </div>
+            
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-lock text-white text-xl"></i>
+                </div>
+                <h3 class="text-white font-semibold text-sm">End-to-End Encrypted</h3>
+            </div>
+            
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-microchip text-white text-xl"></i>
+                </div>
+                <h3 class="text-white font-semibold text-sm">Hardware Secured</h3>
+            </div>
+            
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-eye-slash text-white text-xl"></i>
+                </div>
+                <h3 class="text-white font-semibold text-sm">Zero Knowledge</h3>
             </div>
         </div>
     </div>
@@ -144,13 +200,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressDiv = document.getElementById('loginProgress');
     const statusDiv = document.getElementById('statusMessage');
 
+    // Add input focus effects
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('ring-2', 'ring-blue-400');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('ring-2', 'ring-blue-400');
+        });
+    });
+
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const username = document.getElementById('username').value.trim();
 
-        if (!username) {
-            showMessage('Please enter your username', 'danger');
+        // Validate username
+        const usernameErrors = WebAuthnHelpers.validateUsername(username);
+        if (usernameErrors.length > 0) {
+            showMessage(usernameErrors[0], 'danger');
             return;
         }
 
@@ -182,10 +252,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Convert options for WebAuthn
             const publicKeyOptions = {
                 ...options,
-                challenge: base64URLToArrayBuffer(options.challenge),
+                challenge: WebAuthnHelpers.base64URLToArrayBuffer(options.challenge),
                 allowCredentials: options.allowCredentials.map(cred => ({
                     ...cred,
-                    id: base64URLToArrayBuffer(cred.id)
+                    id: WebAuthnHelpers.base64URLToArrayBuffer(cred.id)
                 }))
             };
 
@@ -203,12 +273,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Complete authentication
             const credentialData = {
                 id: credential.id,
-                rawId: arrayBufferToBase64URL(credential.rawId),
+                rawId: WebAuthnHelpers.arrayBufferToBase64URL(credential.rawId),
                 response: {
-                    authenticatorData: arrayBufferToBase64URL(credential.response.authenticatorData),
-                    clientDataJSON: arrayBufferToBase64URL(credential.response.clientDataJSON),
-                    signature: arrayBufferToBase64URL(credential.response.signature),
-                    userHandle: credential.response.userHandle ? arrayBufferToBase64URL(credential.response.userHandle) : null
+                    authenticatorData: WebAuthnHelpers.arrayBufferToBase64URL(credential.response.authenticatorData),
+                    clientDataJSON: WebAuthnHelpers.arrayBufferToBase64URL(credential.response.clientDataJSON),
+                    signature: WebAuthnHelpers.arrayBufferToBase64URL(credential.response.signature),
+                    userHandle: credential.response.userHandle ? WebAuthnHelpers.arrayBufferToBase64URL(credential.response.userHandle) : null
                 },
                 type: credential.type
             };
@@ -236,48 +306,64 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Authentication error:', error);
             hideProgress();
             
-            if (error.name === 'NotAllowedError') {
-                showMessage('Authentication was cancelled or timed out. Please try again.', 'warning');
-            } else if (error.name === 'NotSupportedError') {
-                showMessage('Your browser or device does not support WebAuthn. Please use a compatible browser.', 'danger');
-            } else {
-                showMessage(`Authentication failed: ${error.message}`, 'danger');
-            }
+            const errorInfo = WebAuthnHelpers.handleWebAuthnError(error);
+            showMessage(`Authentication failed: ${errorInfo.message}`, errorInfo.type);
         }
     });
 
     function showProgress() {
         form.style.display = 'none';
-        progressDiv.classList.remove('d-none');
+        progressDiv.classList.remove('hidden');
         loginBtn.disabled = true;
     }
 
     function hideProgress() {
         form.style.display = 'block';
-        progressDiv.classList.add('d-none');
+        progressDiv.classList.add('hidden');
         loginBtn.disabled = false;
     }
 
     function setActiveStep(stepNumber) {
-        // Remove active class from all steps
-        document.querySelectorAll('.progress-step').forEach(step => {
-            step.classList.remove('active');
-        });
-        
-        // Add active class to current and previous steps
-        for (let i = 1; i <= stepNumber; i++) {
+        // Update progress steps
+        for (let i = 1; i <= 4; i++) {
             const step = document.getElementById(`loginStep${i}`);
-            if (step) {
+            const checkIcon = step.querySelector('.w-6.h-6');
+            
+            if (i < stepNumber) {
+                // Completed step
+                step.classList.add('completed');
+                checkIcon.innerHTML = '<i class="fas fa-check text-white text-xs"></i>';
+                checkIcon.className = 'w-6 h-6 rounded-full bg-green-400 flex items-center justify-center';
+            } else if (i === stepNumber) {
+                // Current step
                 step.classList.add('active');
+                checkIcon.innerHTML = '<div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>';
+                checkIcon.className = 'w-6 h-6 rounded-full bg-blue-400 flex items-center justify-center';
+            } else {
+                // Future step
+                step.classList.remove('active', 'completed');
+                checkIcon.innerHTML = '<div class="w-2 h-2 bg-white/50 rounded-full"></div>';
+                checkIcon.className = 'w-6 h-6 rounded-full border-2 border-white/30 flex items-center justify-center';
             }
         }
     }
 
     function showMessage(message, type) {
+        const typeConfig = {
+            success: { icon: 'check-circle', bgClass: 'bg-green-500/20 border-green-400/30', textClass: 'text-green-100' },
+            danger: { icon: 'exclamation-triangle', bgClass: 'bg-red-500/20 border-red-400/30', textClass: 'text-red-100' },
+            warning: { icon: 'exclamation-triangle', bgClass: 'bg-yellow-500/20 border-yellow-400/30', textClass: 'text-yellow-100' },
+            info: { icon: 'info-circle', bgClass: 'bg-blue-500/20 border-blue-400/30', textClass: 'text-blue-100' }
+        };
+        
+        const config = typeConfig[type] || typeConfig.info;
+        
         statusDiv.innerHTML = `
-            <div class="alert alert-${type}" role="alert">
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
-                ${message}
+            <div class="p-4 rounded-2xl backdrop-blur-md border ${config.bgClass} ${config.textClass}">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-${config.icon} text-lg"></i>
+                    <span>${message}</span>
+                </div>
             </div>
         `;
     }
