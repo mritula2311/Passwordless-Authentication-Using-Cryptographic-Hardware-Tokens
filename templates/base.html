@@ -1,15 +1,201 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" class="scroll-smooth" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Passwordless Authentication{% endblock %}</title>
     
     <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <style>
+        /* Tailwind-like utility classes */
+        .max-w-7xl { max-width: 80rem; }
+        .max-w-4xl { max-width: 56rem; }
+        .max-w-3xl { max-width: 48rem; }
+        .max-w-2xl { max-width: 42rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        .pt-16 { padding-top: 4rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-16 { margin-bottom: 4rem; }
+        .mt-20 { margin-top: 5rem; }
+        .mr-3 { margin-right: 0.75rem; }
+        .ml-2 { margin-left: 0.5rem; }
+        .w-full { width: 100%; }
+        .w-6 { width: 1.5rem; }
+        .w-10 { width: 2.5rem; }
+        .w-12 { width: 3rem; }
+        .w-16 { width: 4rem; }
+        .w-20 { width: 5rem; }
+        .h-6 { height: 1.5rem; }
+        .h-10 { height: 2.5rem; }
+        .h-12 { height: 3rem; }
+        .h-16 { height: 4rem; }
+        .h-20 { height: 5rem; }
+        .h-80 { height: 20rem; }
+        .min-h-screen { min-height: 100vh; }
+        .fixed { position: fixed; }
+        .absolute { position: absolute; }
+        .relative { position: relative; }
+        .top-0 { top: 0; }
+        .top-4 { top: 1rem; }
+        .right-4 { right: 1rem; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-40 { z-index: 40; }
+        .z-50 { z-index: 50; }
+        .flex { display: flex; }
+        .grid { display: grid; }
+        .hidden { display: none; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-white { color: white; }
+        .text-xs { font-size: 0.75rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-6xl { font-size: 3.75rem; }
+        .text-7xl { font-size: 4.5rem; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .leading-tight { line-height: 1.25; }
+        .leading-relaxed { line-height: 1.625; }
+        .rounded-full { border-radius: 9999px; }
+        .rounded-2xl { border-radius: 1rem; }
+        .rounded-3xl { border-radius: 1.5rem; }
+        .border { border-width: 1px; }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .transition-all { transition-property: all; }
+        .transition-colors { transition-property: color, background-color, border-color; }
+        .transition-transform { transition-property: transform; }
+        .duration-300 { transition-duration: 300ms; }
+        .duration-500 { transition-duration: 500ms; }
+        .cursor-pointer { cursor: pointer; }
+        .overflow-hidden { overflow: hidden; }
+        .space-x-2 > * + * { margin-left: 0.5rem; }
+        .space-x-4 > * + * { margin-left: 1rem; }
+        .space-y-1 > * + * { margin-top: 0.25rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+        .gap-12 { gap: 3rem; }
+        
+        /* Grid layouts */
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        
+        @media (min-width: 768px) {
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .md\:text-5xl { font-size: 3rem; }
+            .md\:text-6xl { font-size: 3.75rem; }
+            .md\:w-96 { width: 24rem; }
+            .md\:h-96 { height: 24rem; }
+            .md\:block { display: block; }
+        }
+        
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .lg\:text-left { text-align: left; }
+            .lg\:text-6xl { font-size: 3.75rem; }
+            .lg\:text-7xl { font-size: 4.5rem; }
+            .lg\:justify-start { justify-content: flex-start; }
+            .lg\:justify-end { justify-content: flex-end; }
+            .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+        }
+        
+        @media (max-width: 767px) {
+            .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .sm\:flex-row { flex-direction: row; }
+        }
+        
+        /* Gradient text */
+        .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
+        .from-pink-400 { --tw-gradient-from: #f472b6; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(244, 114, 182, 0)); }
+        .via-purple-400 { --tw-gradient-via: #c084fc; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to, rgba(192, 132, 252, 0)); }
+        .to-blue-400 { --tw-gradient-to: #60a5fa; }
+        .from-yellow-400 { --tw-gradient-from: #facc15; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(250, 204, 21, 0)); }
+        .to-orange-400 { --tw-gradient-to: #fb923c; }
+        .from-green-400 { --tw-gradient-from: #4ade80; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(74, 222, 128, 0)); }
+        .to-blue-500 { --tw-gradient-to: #3b82f6; }
+        .from-purple-500 { --tw-gradient-from: #a855f7; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(168, 85, 247, 0)); }
+        .to-pink-500 { --tw-gradient-to: #ec4899; }
+        .from-purple-600 { --tw-gradient-from: #9333ea; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(147, 51, 234, 0)); }
+        .to-pink-600 { --tw-gradient-to: #db2777; }
+        .from-orange-500 { --tw-gradient-from: #f97316; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 115, 22, 0)); }
+        .to-red-500 { --tw-gradient-to: #ef4444; }
+        .from-orange-600 { --tw-gradient-from: #ea580c; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(234, 88, 12, 0)); }
+        .to-red-600 { --tw-gradient-to: #dc2626; }
+        .bg-clip-text { -webkit-background-clip: text; background-clip: text; }
+        .text-transparent { color: transparent; }
+        
+        /* Color utilities */
+        .bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); }
+        .bg-white\/20 { background-color: rgba(255, 255, 255, 0.2); }
+        .border-white\/20 { border-color: rgba(255, 255, 255, 0.2); }
+        .border-white\/30 { border-color: rgba(255, 255, 255, 0.3); }
+        .text-white\/70 { color: rgba(255, 255, 255, 0.7); }
+        .text-white\/80 { color: rgba(255, 255, 255, 0.8); }
+        .text-white\/90 { color: rgba(255, 255, 255, 0.9); }
+        
+        /* Hover effects */
+        .hover\:bg-white\/20:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .hover\:bg-white\/30:hover { background-color: rgba(255, 255, 255, 0.3); }
+        .hover\:border-white\/30:hover { border-color: rgba(255, 255, 255, 0.3); }
+        .hover\:text-blue-200:hover { color: #bfdbfe; }
+        .hover\:scale-105:hover { transform: scale(1.05); }
+        .hover\:-translate-y-1:hover { transform: translateY(-0.25rem); }
+        .hover\:-translate-y-2:hover { transform: translateY(-0.5rem); }
+        .hover\:shadow-2xl:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .hover\:from-purple-600:hover { --tw-gradient-from: #9333ea; }
+        .hover\:to-pink-600:hover { --tw-gradient-to: #db2777; }
+        .hover\:from-orange-600:hover { --tw-gradient-from: #ea580c; }
+        .hover\:to-red-600:hover { --tw-gradient-to: #dc2626; }
+        
+        /* Group hover effects */
+        .group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+        .group:hover .group-hover\:translate-x-1 { transform: translateX(0.25rem); }
+        
+        /* Animations */
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .animate-bounce { animation: bounce 1s infinite; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite alternate; }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out; }
+        
+        /* Flex utilities */
+        .flex-col { flex-direction: column; }
+        .inline-flex { display: inline-flex; }
+        
+        /* Transform */
+        .transform { transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)); }
+        .-translate-x-1\/2 { --tw-translate-x: -50%; transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)); }
+        
+        /* Scroll */
+        .scroll-smooth { scroll-behavior: smooth; }
+    </style>
     
     {% block head %}{% endblock %}
 </head>
@@ -18,51 +204,68 @@
     <div class="particles" id="particles"></div>
     
     <!-- Theme toggle -->
-    <div class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-moon" id="theme-icon"></i>
+    <div class="fixed top-4 right-4 z-50 bg-white/20 backdrop-blur-md border border-white/20 rounded-full p-3 cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-white/30" onclick="toggleTheme()">
+        <i class="fas fa-moon text-white" id="theme-icon"></i>
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark glass">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
-                <i class="fas fa-shield-alt me-2"></i>
-                Passwordless Auth
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                    </li>
-                </ul>
+    <nav class="fixed w-full top-0 z-40 bg-white/10 backdrop-blur-md border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="{{ url_for('index') }}" class="flex items-center space-x-2 text-white font-bold text-xl hover:text-blue-200 transition-colors duration-300">
+                        <i class="fas fa-shield-alt text-blue-300"></i>
+                        <span>Passwordless Auth</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{{ url_for('index') }}" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-white/10 relative group">
+                            Home
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="{{ url_for('register') }}" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-white/10 relative group">
+                            Register
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="{{ url_for('login') }}" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-white/10 relative group">
+                            Login
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" class="text-white hover:text-blue-200 focus:outline-none focus:text-blue-200 transition-colors duration-300" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white/10 backdrop-blur-md border-t border-white/20">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ url_for('index') }}" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300">Home</a>
+                <a href="{{ url_for('register') }}" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300">Register</a>
+                <a href="{{ url_for('login') }}" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300">Login</a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main>
+    <main class="pt-16">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="glass text-light py-4 mt-5">
-        <div class="container text-center">
-            <p>&copy; 2024 Passwordless Authentication Demo. Built with FIDO2/WebAuthn.</p>
-            <p class="small text-muted">Secure, phishing-resistant authentication using cryptographic hardware tokens.</p>
+    <footer class="bg-white/10 backdrop-blur-md border-t border-white/20 text-white py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm mb-2">&copy; 2024 Passwordless Authentication Demo. Built with FIDO2/WebAuthn.</p>
+            <p class="text-xs text-white/70">Secure, phishing-resistant authentication using cryptographic hardware tokens.</p>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/webauthn.js') }}"></script>
     <script>
         // Theme toggle functionality
@@ -73,27 +276,56 @@
             
             if (currentTheme === 'light') {
                 html.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'fas fa-sun';
+                themeIcon.className = 'fas fa-sun text-white';
                 localStorage.setItem('theme', 'dark');
             } else {
                 html.setAttribute('data-theme', 'light');
-                themeIcon.className = 'fas fa-moon';
+                themeIcon.className = 'fas fa-moon text-white';
                 localStorage.setItem('theme', 'light');
             }
         }
 
-        // Load saved theme
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Load saved theme and initialize animations
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             const html = document.documentElement;
             const themeIcon = document.getElementById('theme-icon');
             
             html.setAttribute('data-theme', savedTheme);
-            themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun text-white' : 'fas fa-moon text-white';
+            
+            // Initialize simple scroll animations
+            initScrollAnimations();
             
             // Initialize particles
             createParticles();
         });
+
+        // Simple scroll animations (AOS replacement)
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observe elements with data-aos attributes
+            document.querySelectorAll('[data-aos]').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+        }
 
         // Create animated particles
         function createParticles() {
@@ -108,6 +340,14 @@
                 particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
                 particlesContainer.appendChild(particle);
             }
+        }
+
+        // Modern smooth scroll
+        function smoothScrollTo(target) {
+            document.querySelector(target).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }
     </script>
     {% block scripts %}{% endblock %}
