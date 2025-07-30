@@ -4,83 +4,134 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-section bg-gradient-primary text-white">
-    <div class="container">
-        <div class="row align-items-center min-vh-100">
-            <div class="col-lg-6">
-                <div class="hero-content">
-                    <h1 class="display-4 fw-bold mb-4">
-                        Passwordless Authentication
-                        <span class="text-warning">Made Simple</span>
-                    </h1>
-                    <p class="lead mb-4">
-                        Experience the future of secure authentication using cryptographic hardware tokens. 
-                        No more passwords, just secure, phishing-resistant login with your YubiKey, 
-                        smartphone, or built-in biometrics.
-                    </p>
-                    <div class="d-flex gap-3 flex-wrap">
-                        <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg">
-                            <i class="fas fa-user-plus me-2"></i>
-                            Get Started
-                        </a>
-                        <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-sign-in-alt me-2"></i>
-                            Sign In
-                        </a>
-                    </div>
+<section class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Column - Content -->
+            <div class="text-center lg:text-left" data-aos="fade-right">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                    Passwordless 
+                    <span class="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent animate-pulse">
+                        Authentication
+                    </span>
+                    <br>
+                    <span class="text-3xl md:text-5xl lg:text-6xl bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                        Made Simple
+                    </span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Experience the future of secure authentication using cryptographic hardware tokens. 
+                    No more passwords, just secure, phishing-resistant login with your YubiKey, 
+                    smartphone, or built-in biometrics.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="{{ url_for('register') }}" 
+                       class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 group">
+                        <i class="fas fa-user-plus mr-3 group-hover:scale-110 transition-transform duration-300"></i>
+                        Get Started
+                        <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                    </a>
+                    <a href="{{ url_for('login') }}" 
+                       class="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-2xl hover:bg-white/20 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 group">
+                        <i class="fas fa-sign-in-alt mr-3 group-hover:scale-110 transition-transform duration-300"></i>
+                        Sign In
+                    </a>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="hero-image text-center">
-                    <div class="security-illustration">
-                        <i class="fas fa-shield-alt display-1 text-warning mb-3"></i>
-                        <div class="floating-icons">
-                            <i class="fas fa-key floating-icon-1"></i>
-                            <i class="fas fa-mobile-alt floating-icon-2"></i>
-                            <i class="fas fa-fingerprint floating-icon-3"></i>
+            
+            <!-- Right Column - 3D Illustration -->
+            <div class="flex justify-center lg:justify-end" data-aos="fade-left">
+                <div class="relative w-80 h-80 md:w-96 md:h-96">
+                    <!-- Main Security Shield -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-48 h-48 md:w-64 md:h-64 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse-glow shadow-2xl">
+                            <i class="fas fa-shield-alt text-6xl md:text-8xl text-white animate-float"></i>
                         </div>
+                    </div>
+                    
+                    <!-- Floating Security Icons -->
+                    <div class="absolute top-4 right-4 w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center animate-float border border-white/30 shadow-lg" style="animation-delay: 0.5s;">
+                        <i class="fas fa-key text-2xl text-white"></i>
+                    </div>
+                    
+                    <div class="absolute bottom-8 left-4 w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center animate-float border border-white/30 shadow-lg" style="animation-delay: 1s;">
+                        <i class="fas fa-mobile-alt text-2xl text-white"></i>
+                    </div>
+                    
+                    <div class="absolute top-16 left-0 w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center animate-float border border-white/30 shadow-lg" style="animation-delay: 1.5s;">
+                        <i class="fas fa-fingerprint text-2xl text-white"></i>
+                    </div>
+                    
+                    <div class="absolute bottom-4 right-12 w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center animate-float border border-white/30 shadow-lg" style="animation-delay: 2s;">
+                        <i class="fab fa-usb text-2xl text-white"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+        </div>
+    </div>
 </section>
 
 <!-- Features Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="row text-center mb-5">
-            <div class="col-12">
-                <h2 class="display-5 fw-bold mb-3" style="color: var(--dark-color);">Why Passwordless Authentication?</h2>
-                <p class="lead text-muted">Modern security challenges require modern solutions</p>
-            </div>
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Why Choose
+                <span class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                    Passwordless?
+                </span>
+            </h2>
+            <p class="text-xl text-white/80 max-w-3xl mx-auto">
+                Modern security challenges require modern solutions. Experience the next generation of authentication.
+            </p>
         </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-card h-100">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-virus text-success"></i>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="group" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-shield-virus text-2xl text-white"></i>
                     </div>
-                    <h4>Phishing Resistant</h4>
-                    <p class="text-muted">Hardware-backed authentication can't be replayed or stolen by attackers, even if intercepted.</p>
+                    <h3 class="text-2xl font-bold text-white mb-4">Phishing Resistant</h3>
+                    <p class="text-white/80 leading-relaxed">
+                        Hardware-backed authentication can't be replayed or stolen by attackers, even if intercepted. Your security is guaranteed.
+                    </p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="feature-card h-100">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt text-warning"></i>
+            
+            <!-- Feature 2 -->
+            <div class="group" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-bolt text-2xl text-white"></i>
                     </div>
-                    <h4>Lightning Fast</h4>
-                    <p class="text-muted">Sign in with just a touch, biometric, or PIN. No more typing complex passwords.</p>
+                    <h3 class="text-2xl font-bold text-white mb-4">Lightning Fast</h3>
+                    <p class="text-white/80 leading-relaxed">
+                        Sign in with just a touch, biometric, or PIN. No more typing complex passwords or remembering them.
+                    </p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="feature-card h-100">
-                    <div class="feature-icon">
-                        <i class="fas fa-microchip text-primary"></i>
+            
+            <!-- Feature 3 -->
+            <div class="group" data-aos="fade-up" data-aos-delay="300">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-microchip text-2xl text-white"></i>
                     </div>
-                    <h4>Hardware Secured</h4>
-                    <p class="text-muted">Private keys never leave your device. Authentication happens in secure hardware.</p>
+                    <h3 class="text-2xl font-bold text-white mb-4">Hardware Secured</h3>
+                    <p class="text-white/80 leading-relaxed">
+                        Private keys never leave your device. Authentication happens in secure hardware you control.
+                    </p>
                 </div>
             </div>
         </div>
@@ -88,53 +139,98 @@
 </section>
 
 <!-- How It Works Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="row text-center mb-5">
-            <div class="col-12">
-                <h2 class="display-5 fw-bold mb-3" style="color: var(--dark-color);">How It Works</h2>
-                <p class="lead text-muted">Simple steps to secure authentication</p>
-            </div>
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                How It
+                <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    Works
+                </span>
+            </h2>
+            <p class="text-xl text-white/80 max-w-3xl mx-auto">
+                Simple steps to secure authentication in just seconds
+            </p>
         </div>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">
-                        <i class="fas fa-user-plus"></i>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Step 1 -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-center">
+                    <div class="relative mx-auto w-20 h-20 mb-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-2xl animate-pulse-glow">
+                            1
+                        </div>
                     </div>
-                    <h5>Register</h5>
-                    <p class="small text-muted">Create your account and register your hardware token or biometric device.</p>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-plus text-xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Register</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">
+                            Create your account and register your hardware token or biometric device
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">
-                        <i class="fas fa-random"></i>
+            
+            <!-- Step 2 -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-center">
+                    <div class="relative mx-auto w-20 h-20 mb-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-2xl animate-pulse-glow">
+                            2
+                        </div>
                     </div>
-                    <h5>Challenge</h5>
-                    <p class="small text-muted">Server sends a unique cryptographic challenge to your device.</p>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-random text-xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Challenge</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">
+                            Server sends a unique cryptographic challenge to your device
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <i class="fas fa-hand-point-up"></i>
+            
+            <!-- Step 3 -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-center">
+                    <div class="relative mx-auto w-20 h-20 mb-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-400 to-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-2xl animate-pulse-glow">
+                            3
+                        </div>
                     </div>
-                    <h5>Verify</h5>
-                    <p class="small text-muted">Touch your token, use your fingerprint, or enter your device PIN.</p>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-hand-point-up text-xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Verify</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">
+                            Touch your token, use fingerprint, or enter device PIN
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <div class="step-icon">
-                        <i class="fas fa-check-circle"></i>
+            
+            <!-- Step 4 -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="400">
+                <div class="text-center">
+                    <div class="relative mx-auto w-20 h-20 mb-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-2xl animate-pulse-glow">
+                            4
+                        </div>
                     </div>
-                    <h5>Access</h5>
-                    <p class="small text-muted">Your device signs the challenge and you're securely authenticated.</p>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-teal-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check-circle text-xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Access</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">
+                            Device signs challenge and you're securely authenticated
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,42 +238,93 @@
 </section>
 
 <!-- Supported Devices Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="row text-center mb-5">
-            <div class="col-12">
-                <h2 class="display-5 fw-bold mb-3">Supported Devices</h2>
-                <p class="lead text-muted">Works with your existing hardware</p>
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Supported
+                <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                    Devices
+                </span>
+            </h2>
+            <p class="text-xl text-white/80 max-w-3xl mx-auto">
+                Works seamlessly with your existing hardware and devices
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- YubiKey -->
+            <div class="group" data-aos="zoom-in" data-aos-delay="100">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fab fa-usb text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">YubiKey</h3>
+                    <p class="text-white/70 text-sm">USB/NFC security keys</p>
+                </div>
+            </div>
+            
+            <!-- Smartphones -->
+            <div class="group" data-aos="zoom-in" data-aos-delay="200">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-mobile-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Smartphones</h3>
+                    <p class="text-white/70 text-sm">iOS/Android biometrics</p>
+                </div>
+            </div>
+            
+            <!-- Built-in TPM -->
+            <div class="group" data-aos="zoom-in" data-aos-delay="300">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-laptop text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Built-in TPM</h3>
+                    <p class="text-white/70 text-sm">Windows Hello, Touch ID</p>
+                </div>
+            </div>
+            
+            <!-- Biometrics -->
+            <div class="group" data-aos="zoom-in" data-aos-delay="400">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-fingerprint text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Biometrics</h3>
+                    <p class="text-white/70 text-sm">Fingerprint, Face ID</p>
+                </div>
             </div>
         </div>
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-3 col-6">
-                <div class="device-card">
-                    <i class="fab fa-usb text-primary"></i>
-                    <h6>YubiKey</h6>
-                    <p class="small text-muted">USB/NFC security keys</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="device-card">
-                    <i class="fas fa-mobile-alt text-success"></i>
-                    <h6>Smartphones</h6>
-                    <p class="small text-muted">iOS/Android biometrics</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="device-card">
-                    <i class="fas fa-laptop text-info"></i>
-                    <h6>Built-in TPM</h6>
-                    <p class="small text-muted">Windows Hello, Touch ID</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="device-card">
-                    <i class="fas fa-fingerprint text-warning"></i>
-                    <h6>Biometrics</h6>
-                    <p class="small text-muted">Fingerprint, Face ID</p>
-                </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-12 border border-white/20 shadow-2xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                Ready to Go
+                <span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                    Passwordless?
+                </span>
+            </h2>
+            <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+                Join thousands who have already made the switch to secure, passwordless authentication.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ url_for('register') }}" 
+                   class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 group">
+                    <i class="fas fa-rocket mr-3 group-hover:scale-110 transition-transform duration-300"></i>
+                    Start Your Journey
+                    <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">🚀</span>
+                </a>
+                <a href="#features" onclick="smoothScrollTo('#features')"
+                   class="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-2xl hover:bg-white/20 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 group">
+                    <i class="fas fa-info-circle mr-3 group-hover:scale-110 transition-transform duration-300"></i>
+                    Learn More
+                </a>
             </div>
         </div>
     </div>
@@ -188,10 +335,27 @@
 <script>
     // Add some interactive animations
     document.addEventListener('DOMContentLoaded', function() {
-        // Animate floating icons
-        const floatingIcons = document.querySelectorAll('.floating-icon-1, .floating-icon-2, .floating-icon-3');
-        floatingIcons.forEach((icon, index) => {
-            icon.style.animationDelay = `${index * 0.5}s`;
+        // Animate numbers or stats if needed
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        });
+
+        // Observe all feature cards
+        document.querySelectorAll('.group').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.animate-float');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
         });
     });
 </script>
