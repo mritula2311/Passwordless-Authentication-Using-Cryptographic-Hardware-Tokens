@@ -210,3 +210,10 @@ __marimo__/
 passwordless_auth.db
 data/
 *.db
+
+# Node.js dependencies (for frontend)
+frontend/node_modules/
+frontend/build/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
