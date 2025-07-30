@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In - Passwordless Authentication{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="login-card">
+                    <div class="text-center mb-4">
+                        <div class="login-icon">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <h2 class="h3 fw-bold">Welcome Back</h2>
+                        <p class="text-muted">Sign in securely with your hardware token</p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm">
+                        <div class="mb-4">
+                            <label for="username" class="form-label">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <input type="text" class="form-control" id="username" name="username" required 
+                                       placeholder="Enter your username">
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Ready to sign in?</strong><br>
+                            After clicking "Sign In", you'll be prompted to authenticate with your registered device.
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3" id="loginBtn">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            Sign In with Hardware Token
+                        </button>
+
+                        <div class="text-center">
+                            <p class="small text-muted">
+                                Don't have an account? 
+                                <a href="{{ url_for('register') }}" class="text-primary">Register here</a>
+                            </p>
+                        </div>
+                    </form>
+
+                    <!-- Login Progress -->
+                    <div id="loginProgress" class="login-progress d-none">
+                        <div class="progress-step active" id="loginStep1">
+                            <div class="step-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="step-text">
+                                <h6>Finding Account</h6>
+                                <small>Locating your credentials</small>
+                            </div>
+                        </div>
+                        <div class="progress-step" id="loginStep2">
+                            <div class="step-icon">
+                                <i class="fas fa-random"></i>
+                            </div>
+                            <div class="step-text">
+                                <h6>Challenge Issued</h6>
+                                <small>Generating secure challenge</small>
+                            </div>
+                        </div>
+                        <div class="progress-step" id="loginStep3">
+                            <div class="step-icon">
+                                <i class="fas fa-hand-point-up"></i>
+                            </div>
+                            <div class="step-text">
+                                <h6>Authentication</h6>
+                                <small>Touch your token or authenticate</small>
+                            </div>
+                        </div>
+                        <div class="progress-step" id="loginStep4">
+                            <div class="step-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="step-text">
+                                <h6>Access Granted</h6>
+                                <small>Sign in successful</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Messages -->
+                    <div id="statusMessage" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Security Features -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <h6 class="text-muted mb-3">Your Security is Protected By</h6>
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-auto">
+                            <div class="security-feature">
+                                <i class="fas fa-shield-virus text-success"></i>
+                                <small>Phishing Resistant</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="security-feature">
+                                <i class="fas fa-lock text-primary"></i>
+                                <small>End-to-End Encrypted</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="security-feature">
+                                <i class="fas fa-microchip text-warning"></i>
+                                <small>Hardware Secured</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="security-feature">
+                                <i class="fas fa-eye-slash text-info"></i>
+                                <small>Zero Knowledge</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const progressDiv = document.getElementById('loginProgress');
+    const statusDiv = document.getElementById('statusMessage');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value.trim();
+
+        if (!username) {
+            showMessage('Please enter your username', 'danger');
+            return;
+        }
+
+        try {
+            // Show progress
+            showProgress();
+            setActiveStep(1);
+            
+            // Begin authentication
+            showMessage('Finding your account...', 'info');
+            setActiveStep(2);
+            
+            const beginResponse = await fetch('/api/authenticate/begin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username
+                })
+            });
+
+            const options = await beginResponse.json();
+            
+            if (!beginResponse.ok) {
+                throw new Error(options.error || 'Failed to start authentication');
+            }
+
+            // Convert options for WebAuthn
+            const publicKeyOptions = {
+                ...options,
+                challenge: base64URLToArrayBuffer(options.challenge),
+                allowCredentials: options.allowCredentials.map(cred => ({
+                    ...cred,
+                    id: base64URLToArrayBuffer(cred.id)
+                }))
+            };
+
+            setActiveStep(3);
+            showMessage('Please authenticate with your hardware token...', 'warning');
+
+            // Get credential
+            const credential = await navigator.credentials.get({
+                publicKey: publicKeyOptions
+            });
+
+            setActiveStep(4);
+            showMessage('Verifying authentication...', 'info');
+
+            // Complete authentication
+            const credentialData = {
+                id: credential.id,
+                rawId: arrayBufferToBase64URL(credential.rawId),
+                response: {
+                    authenticatorData: arrayBufferToBase64URL(credential.response.authenticatorData),
+                    clientDataJSON: arrayBufferToBase64URL(credential.response.clientDataJSON),
+                    signature: arrayBufferToBase64URL(credential.response.signature),
+                    userHandle: credential.response.userHandle ? arrayBufferToBase64URL(credential.response.userHandle) : null
+                },
+                type: credential.type
+            };
+
+            const completeResponse = await fetch('/api/authenticate/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentialData)
+            });
+
+            const result = await completeResponse.json();
+
+            if (completeResponse.ok) {
+                showMessage('Authentication successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 1500);
+            } else {
+                throw new Error(result.error || 'Authentication failed');
+            }
+
+        } catch (error) {
+            console.error('Authentication error:', error);
+            hideProgress();
+            
+            if (error.name === 'NotAllowedError') {
+                showMessage('Authentication was cancelled or timed out. Please try again.', 'warning');
+            } else if (error.name === 'NotSupportedError') {
+                showMessage('Your browser or device does not support WebAuthn. Please use a compatible browser.', 'danger');
+            } else {
+                showMessage(`Authentication failed: ${error.message}`, 'danger');
+            }
+        }
+    });
+
+    function showProgress() {
+        form.style.display = 'none';
+        progressDiv.classList.remove('d-none');
+        loginBtn.disabled = true;
+    }
+
+    function hideProgress() {
+        form.style.display = 'block';
+        progressDiv.classList.add('d-none');
+        loginBtn.disabled = false;
+    }
+
+    function setActiveStep(stepNumber) {
+        // Remove active class from all steps
+        document.querySelectorAll('.progress-step').forEach(step => {
+            step.classList.remove('active');
+        });
+        
+        // Add active class to current and previous steps
+        for (let i = 1; i <= stepNumber; i++) {
+            const step = document.getElementById(`loginStep${i}`);
+            if (step) {
+                step.classList.add('active');
+            }
+        }
+    }
+
+    function showMessage(message, type) {
+        statusDiv.innerHTML = `
+            <div class="alert alert-${type}" role="alert">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                ${message}
+            </div>
+        `;
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,333 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Passwordless Authentication{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- Welcome Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="welcome-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h1 class="h3 mb-1">Welcome back, {{ user.display_name }}!</h1>
+                            <p class="text-muted mb-0">
+                                <i class="fas fa-shield-check text-success me-2"></i>
+                                Securely authenticated with hardware token
+                            </p>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-danger" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Sign Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Overview -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stats-icon bg-primary">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="card-title mb-1">Account Status</h6>
+                                <p class="card-text text-success mb-0">
+                                    <i class="fas fa-check-circle me-1"></i>
+                                    Active & Verified
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stats-icon bg-success">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="card-title mb-1">Security Level</h6>
+                                <p class="card-text text-success mb-0">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Hardware Protected
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stats-icon bg-info">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="card-title mb-1">Last Sign In</h6>
+                                <p class="card-text mb-0">
+                                    <small class="text-muted">Just now</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Information -->
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-user-circle me-2"></i>
+                            Account Information
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Username</label>
+                                <p class="form-control-plaintext">{{ user.username }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Display Name</label>
+                                <p class="form-control-plaintext">{{ user.display_name }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Account Created</label>
+                                <p class="form-control-plaintext">{{ user.created_at.strftime('%B %d, %Y') }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">User ID</label>
+                                <p class="form-control-plaintext">
+                                    <code class="small">{{ user.user_id[:16] }}...</code>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Features -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            Security Features Active
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="security-feature-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>Passwordless Authentication</strong>
+                                    <p class="small text-muted mb-0">No passwords to remember or steal</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="security-feature-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>Phishing Protection</strong>
+                                    <p class="small text-muted mb-0">Hardware-backed authentication</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="security-feature-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>FIDO2/WebAuthn</strong>
+                                    <p class="small text-muted mb-0">Industry standard security</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="security-feature-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>Hardware Token</strong>
+                                    <p class="small text-muted mb-0">Private keys never leave device</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Registered Devices -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-devices me-2"></i>
+                            Registered Devices
+                        </h5>
+                        <span class="badge bg-primary" id="deviceCount">Loading...</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="deviceList">
+                            <div class="text-center">
+                                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="small text-muted mt-2">Loading your devices...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-bolt me-2"></i>
+                            Quick Actions
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary" onclick="refreshDevices()">
+                                <i class="fas fa-sync-alt me-2"></i>
+                                Refresh Devices
+                            </button>
+                            <button class="btn btn-outline-success" onclick="window.location.href='/register'">
+                                <i class="fas fa-plus me-2"></i>
+                                Add Another Device
+                            </button>
+                            <button class="btn btn-outline-info" onclick="testAuthentication()">
+                                <i class="fas fa-vial me-2"></i>
+                                Test Authentication
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadUserDevices();
+});
+
+async function loadUserDevices() {
+    try {
+        const response = await fetch('/api/user/credentials');
+        const data = await response.json();
+        
+        if (response.ok) {
+            displayDevices(data.credentials);
+        } else {
+            throw new Error(data.error || 'Failed to load devices');
+        }
+    } catch (error) {
+        console.error('Error loading devices:', error);
+        document.getElementById('deviceList').innerHTML = `
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Unable to load devices: ${error.message}
+            </div>
+        `;
+    }
+}
+
+function displayDevices(credentials) {
+    const deviceList = document.getElementById('deviceList');
+    const deviceCount = document.getElementById('deviceCount');
+    
+    deviceCount.textContent = credentials.length;
+    
+    if (credentials.length === 0) {
+        deviceList.innerHTML = `
+            <div class="text-center text-muted">
+                <i class="fas fa-mobile-alt mb-2" style="font-size: 2rem; opacity: 0.5;"></i>
+                <p class="small">No devices registered</p>
+            </div>
+        `;
+        return;
+    }
+    
+    deviceList.innerHTML = credentials.map(cred => `
+        <div class="device-item mb-3">
+            <div class="d-flex align-items-center">
+                <div class="device-icon me-3">
+                    <i class="fas fa-key text-primary"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-1">${cred.authenticator_name}</h6>
+                    <small class="text-muted">
+                        Added ${new Date(cred.created_at).toLocaleDateString()}
+                    </small>
+                </div>
+            </div>
+            <hr class="my-2">
+            <div class="credential-details">
+                <small class="text-muted">
+                    ID: ${cred.id.substring(0, 16)}...
+                </small>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function logout() {
+    try {
+        const response = await fetch('/api/logout', {
+            method: 'POST'
+        });
+        
+        if (response.ok) {
+            window.location.href = '/';
+        } else {
+            throw new Error('Logout failed');
+        }
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('Failed to logout. Please try again.');
+    }
+}
+
+function refreshDevices() {
+    const button = event.target;
+    const originalText = button.innerHTML;
+    
+    button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Refreshing...';
+    button.disabled = true;
+    
+    loadUserDevices().finally(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+    });
+}
+
+async function testAuthentication() {
+    const button = event.target;
+    const originalText = button.innerHTML;
+    
+    button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Testing...';
+    button.disabled = true;
+    
+    try {
+        // This would trigger a test authentication flow
+        alert('Test authentication feature coming soon!');
+    } catch (error) {
+        console.error('Test error:', error);
+        alert('Test failed: ' + error.message);
+    } finally {
+        button.innerHTML = originalText;
+        button.disabled = false;
+    }
+}
+</script>
+{% endblock %}

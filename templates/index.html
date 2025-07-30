@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Passwordless Authentication - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-gradient-primary text-white">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="display-4 fw-bold mb-4">
+                        Passwordless Authentication
+                        <span class="text-warning">Made Simple</span>
+                    </h1>
+                    <p class="lead mb-4">
+                        Experience the future of secure authentication using cryptographic hardware tokens. 
+                        No more passwords, just secure, phishing-resistant login with your YubiKey, 
+                        smartphone, or built-in biometrics.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Get Started
+                        </a>
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Sign In
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image text-center">
+                    <div class="security-illustration">
+                        <i class="fas fa-shield-alt display-1 text-warning mb-3"></i>
+                        <div class="floating-icons">
+                            <i class="fas fa-key floating-icon-1"></i>
+                            <i class="fas fa-mobile-alt floating-icon-2"></i>
+                            <i class="fas fa-fingerprint floating-icon-3"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3">Why Passwordless Authentication?</h2>
+                <p class="lead text-muted">Modern security challenges require modern solutions</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-virus text-success"></i>
+                    </div>
+                    <h4>Phishing Resistant</h4>
+                    <p class="text-muted">Hardware-backed authentication can't be replayed or stolen by attackers, even if intercepted.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt text-warning"></i>
+                    </div>
+                    <h4>Lightning Fast</h4>
+                    <p class="text-muted">Sign in with just a touch, biometric, or PIN. No more typing complex passwords.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-microchip text-primary"></i>
+                    </div>
+                    <h4>Hardware Secured</h4>
+                    <p class="text-muted">Private keys never leave your device. Authentication happens in secure hardware.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3">How It Works</h2>
+                <p class="lead text-muted">Simple steps to secure authentication</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h5>Register</h5>
+                    <p class="small text-muted">Create your account and register your hardware token or biometric device.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h5>Challenge</h5>
+                    <p class="small text-muted">Server sends a unique cryptographic challenge to your device.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-hand-point-up"></i>
+                    </div>
+                    <h5>Verify</h5>
+                    <p class="small text-muted">Touch your token, use your fingerprint, or enter your device PIN.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h5>Access</h5>
+                    <p class="small text-muted">Your device signs the challenge and you're securely authenticated.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Supported Devices Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3">Supported Devices</h2>
+                <p class="lead text-muted">Works with your existing hardware</p>
+            </div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3 col-6">
+                <div class="device-card">
+                    <i class="fab fa-usb text-primary"></i>
+                    <h6>YubiKey</h6>
+                    <p class="small text-muted">USB/NFC security keys</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="device-card">
+                    <i class="fas fa-mobile-alt text-success"></i>
+                    <h6>Smartphones</h6>
+                    <p class="small text-muted">iOS/Android biometrics</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="device-card">
+                    <i class="fas fa-laptop text-info"></i>
+                    <h6>Built-in TPM</h6>
+                    <p class="small text-muted">Windows Hello, Touch ID</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="device-card">
+                    <i class="fas fa-fingerprint text-warning"></i>
+                    <h6>Biometrics</h6>
+                    <p class="small text-muted">Fingerprint, Face ID</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add some interactive animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate floating icons
+        const floatingIcons = document.querySelectorAll('.floating-icon-1, .floating-icon-2, .floating-icon-3');
+        floatingIcons.forEach((icon, index) => {
+            icon.style.animationDelay = `${index * 0.5}s`;
+        });
+    });
+</script>
+{% endblock %}
